@@ -147,7 +147,7 @@ int dynamicArrayDeleteData(dynamicArray *pArray)
 
 /* 静态函数一定要前置声明 */
 /* 缩容 */
-static shrinkDynamicCapacity(dynamicArray *pArray)
+static int shrinkDynamicCapacity(dynamicArray *pArray)
 {
     int needShrinkCapacity = pArray->capacity - (pArray->capacity >> 1);
     /* 备份指针 */
@@ -221,6 +221,7 @@ int dynamicArrayDeleteAppointData(dynamicArray *pArray, ELEMENTTYPE val)
     return ON_SUCCESS; 
 
 }
+
 /* 动态数组的销毁 */
 int dynamicArrayDestory(dynamicArray *pArray)
 {
@@ -268,4 +269,21 @@ int dynamicArrayGetCapacity(dynamicArray *pArray, int *pCapacity)
     
     return ON_SUCCESS;
 
+}
+
+int dynamicArrayGetAppointPosVal(dynamicArray *pArray, int pos, ELEMENTTYPE *pVal)
+{
+    if(pArray == NULL)
+    {
+        return NULL_PTR;
+    }
+    if(pos < 0 || pos >= pArray->len)
+    {
+        return INVALID_ACCESS;
+    }
+    if(pVal)
+    {
+        *pVal = pArray->data[pos];
+    }
+    return ON_SUCCESS;
 }
