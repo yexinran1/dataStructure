@@ -16,6 +16,7 @@ enum STATUS_CODE
 
 /* 静态函数前置声明 */
 static int expandDynamicCapacity(dynamicArray *pArray);
+static int shrinkDynamicCapacity(dynamicArray *pArray);
 
 /* API：application program interface*/
 /* 动态数组初始化 */
@@ -44,17 +45,17 @@ int dynamicArrayInit(dynamicArray *pArray, int capacity)
     return ON_SUCCESS;
 }
 
-
 /* 动态数组插入数据(默认插到数组的末尾) */
 int dynamicArrayInsertData(dynamicArray *pArray, ELEMENTTYPE val)
 {
     return dynamicArrayAppointPosInsertData(pArray, pArray->len, val);
 }
 
+/* 扩容 */
 static int expandDynamicCapacity(dynamicArray *pArray)
 {
     int ret = 0;
-    int needExpandCapacity = pArray->capacity + (pArray->capacity + 1);
+    int needExpandCapacity = pArray->capacity + (pArray->capacity >> 1);
     /* 备份指针 */
     ELEMENTTYPE *tmpPtr = pArray->data;
     pArray->data = (ELEMENTTYPE*)malloc(sizeof(ELEMENTTYPE) * needExpandCapacity);
@@ -65,7 +66,7 @@ static int expandDynamicCapacity(dynamicArray *pArray)
     /* 把之前的数据全部拷贝过来 */
     for(int idx = 0; idx< pArray->len; idx++)
     {
-        pArray->data[idx] = tmpPtr; 
+        pArray->data[idx] = tmpPtr[idx]; 
     }
 
     /* 释放以前的内存， 避免内存泄漏 */
@@ -117,31 +118,91 @@ int dynamicArrayAppointPosInsertData(dynamicArray *pArray, int pos, ELEMENTTYPE 
     (pArray->len) ++;
 }
 
-
-
 /* 动态数组修改指定位置的数据 */
 int dynamicArrayModifyAppointPosData(dynamicArray *pArray, int pos, ELEMENTTYPE val)
 {
+    /* 指针判空 */
+    if(pArray == NULL)
+    {
+        return NULL_PTR;
+    }
+    /* 判断位置的合法性 */
+    if(pos < 0 || pos >= pArray->len)
+    {
+        return INVALID_ACCESS;
+    }
 
+    /* 更新指定位置的数据 */
+    pArray->data[pos] = val;
+
+    return ON_SUCCESS;
 }
-
 
 
 /* 动态数组删除数据(默认情况下删除末尾的数据) */
 int dynamicArrayDeleteData(dynamicArray *pArray)
 {
+    dynamicArrayDeleteAppointPosData(pArray, pArray->len - 1);
+}
 
+/* 静态函数一定要前置声明 */
+/* 缩容 */
+static shrinkDynamicCapacity(dynamicArray *pArray)
+{
+    int needShrinkCapacity = pArray->capacity - (pArray->capacity >> 1);
+    /* 备份指针 */
+    ELEMENTTYPE *tmpPtr = pArray->data;
+    pArray->data = (ELEMENTTYPE*)malloc(sizeof(ELEMENTTYPE) * needShrinkCapacity);
+    if(pArray->data == NULL)
+    {
+        return MALLOC_ERROR;
+    }
+    /* 把之前的数据全部拷贝过来 */
+    for(int idx = 0; idx< pArray->len; idx++)
+    {
+        pArray->data[idx] = tmpPtr[idx]; 
+    }
+
+    /* 释放以前的内存， 避免内存泄漏 */
+    if(tmpPtr != NULL)
+    {
+        free(tmpPtr);
+        tmpPtr = NULL;
+    }
+    pArray->capacity = needShrinkCapacity;
+    return ON_SUCCESS;
 }
 
 /* 动态数组删除指定位置数据 */
 int dynamicArrayDeleteAppointPosData(dynamicArray *pArray, int pos)
 {
-
+    if(pArray == NULL)
+    {
+        return NULL_PTR;
+    }
+    if(pos < 0 || pos >= pArray->len)
+    {
+        return INVALID_ACCESS;
+    }
+    /* 缩容量 */
+    if(pArray->len < pArray->capacity >> 1)
+    {
+        shrinkDynamicCapacity(pArray);
+    }
+     /* 数据前移 */
+    for(int idx = pos; idx < pArray->len; idx++)
+    {
+        pArray->data[idx] = pArray->data[idx + 1];
+    }
+    /* 更新数组的大小 */
+    (pArray->len--);
+    return ON_SUCCESS;
 }
 
 /* 动态数组删除指定的元素 */
 int dynamicArrayDeleteAppointData(dynamicArray *pArray, ELEMENTTYPE val)
 {
+   
 
 }
 /* 动态数组的销毁 */
