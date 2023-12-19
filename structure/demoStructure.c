@@ -48,7 +48,7 @@ int printStructBuffer(stuInfo *stu, int stuSize)
 {
     for(int idx = 0; idx < stuSize; idx++)
     {
-        printf("stu.age:%d\t,stu.height:%d\t,stu.sex:%c\t,stu.weight:%d\t,stu.name%s\n", 
+        printf("stu.age:%d\t,stu.height:%d\t,stu.sex:%c\t,stu.weight:%d\t,stu.name:%s\n", 
         stu[idx].age, stu[idx].height, stu[idx].sex, stu[idx].weight, stu[idx].name);
     }
     return 0;
@@ -57,16 +57,12 @@ int printStructBuffer(stuInfo *stu, int stuSize)
 int main()
 {
 
-#if 1
+
     /* 3、怎么使用结构体 */
+#if 1
     stuInfo stu;
     memset(&stu, 0, sizeof(stu));
-
-#if 0
-    /* 4、结构体的大小 */
-    int len = sizeof(stu);
-    printf("len:%d\n", len);
-#if 0
+    #if 0
     stu.age = 10;
     stu.height = 170;
     stu.sex = 'm';
@@ -76,6 +72,14 @@ int main()
     printf("stu.age:%d\t,stu.height:%d\t,stu.sex:%c\t,stu.weight:%d\t,stu.name%s\n", 
     stu.age, stu.height, stu.sex, stu.weight, stu.name);
 #endif
+
+
+    /* 4、结构体的大小 */
+
+#if 0
+    int len = sizeof(stu);
+    printf("len:%d\n", len);
+
 
     /* 5、结构体数组 */
     /* 数组 ：
@@ -128,13 +132,13 @@ int main()
 
  stuInfo buffer[DEFAULT_SIZE];
     buffer[0].age = 10;
-    buffer[0].height = 50;
+    buffer[0].weight = 50;
     buffer[0].sex = 'm';
     buffer[0].height = 180;
     strncpy(buffer[0].name, "zhangsan", sizeof(buffer[0].name) - 1);
 
     buffer[1].age = 20;
-    buffer[1].height = 50;
+    buffer[1].weight = 50;
     buffer[1].sex = 'f';
     buffer[1].height = 160;
     strncpy(buffer[1].name, "wangwu", sizeof(buffer[1].name) - 1);
@@ -143,7 +147,7 @@ int main()
     printStructBuffer(buffer, sizeof(buffer) / sizeof(buffer[0]));
 #endif
 
-#if 1
+#if 0
     stu.age = 10;
     stu.height = 170;
     stu.sex = 'm';
