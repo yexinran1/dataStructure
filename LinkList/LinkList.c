@@ -4,11 +4,15 @@
 #include<string.h>
 enum STATUS_CODE
 {
+    NOT_FIND = -1,
     ON_SUCCESS,
     NULL_PTR,
     MALLOC_ERROR,
     INVALID_ACCESS,
 };
+/* 静态函数只在源文件生效 */
+/* 静态函数前置声明*/
+static int LinkListAccordAppointValGetPos(LinkList *pList, ELEMEMTTYPE val, int *pPos);
 
 /* 链表初始化 */
 int LinkListInit(LinkList **pList)
@@ -160,10 +164,49 @@ int LinkListDelAppointPos(LinkList *pList, int pos)
     return ret;
 }
 
+/* 根据指定的元素得到在链表中的位置 */
+static int LinkListAccordAppointValGetPos(LinkList *pList, ELEMEMTTYPE val, int *pPos)
+{
+    /* 静态函数只给本源文件的函数使用，不需要判断合法性 */
+    int ret = 0;
+#if 0
+    int pos = 0;
+    LinkNode * trvalNode = pList->head;
+#else
+    int pos = 1;
+    LinkNode * trvalNode = pList->head->next;
+#endif
+    while(trvalNode != NULL)
+    {
+        if(trvalNode->data == val)
+        {
+            /* 解引用 */
+            *pPos = pos;
+            return pos;
+        }
+        trvalNode = trvalNode->next;
+        pos++;
+    }
+    *pPos = NOT_FIND;
+    return NOT_FIND;
+}
+
 /* 删除指定数据 */
 int LinkListDelAppointData(LinkList *pList, ELEMEMTTYPE val)
 {
-
+    int ret = 0;
+    /* 元素在链表中的位置 */
+    int pos = 0;
+    /* 链表的长度 */
+    int size = 0;
+    while(LinkListGetLength(pList, &size) && pos != NOT_FIND)
+    {
+        /* 根据指定的元素得到在链表中的位置 */
+        int pos = 0;
+        LinkListAccordAppointValGetPos(pList, val, &pos);
+        LinkListDelAppointPos(pList, pos);
+    }
+    return ret;
 }
 
 /* 获取链表长度 */
