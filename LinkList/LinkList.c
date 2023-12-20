@@ -144,5 +144,27 @@ int LinkListDestory(LinkList *pList)
 /* 链表遍历接口 */
 int LinkListForeach(LinkList *pList)
 {
-
+    int ret;
+    if(pList == NULL)
+    {
+        return NULL_PTR;
+    }
+#if 0
+    /* travelNode指向虚拟头结点 */
+    LinkNode * travelNode = pList->head;
+    while(travelNode->next != NULL)
+    {
+        travelNode = travelNode->next;
+       printf("travelNode->data:%d\n", travelNode->data);
+    } 
+#else
+    /* travelNode指向第一个元素 */
+    LinkNode * travelNode = pList->head;
+    while(travelNode != NULL)
+    {
+       printf("travelNode->data:%d\n", travelNode->data);
+       travelNode = travelNode->next;
+    } 
+#endif
+    return ret;
 }
