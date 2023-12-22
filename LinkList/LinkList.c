@@ -185,10 +185,10 @@ static int LinkListAccordAppointValGetPos(LinkList *pList, ELEMEMTTYPE val, int 
     LinkNode * trvalNode = pList->head;
 #else
     int pos = 1;
-    LinkNode * trvalNode = pList->head->next;
+    LinkNode * travelNode = pList->head->next;
 #endif
     int cmp = 0;
-    while(trvalNode != NULL)
+    while(travelNode != NULL)
     {
 #if 0
         if(trvalNode->data == val)
@@ -198,6 +198,7 @@ static int LinkListAccordAppointValGetPos(LinkList *pList, ELEMEMTTYPE val, int 
             return pos;
         }
 #else
+        cmp = compareFunc(val, travelNode->data);
         if(cmp == 0)
         {
             /* 解引用 */
@@ -205,7 +206,7 @@ static int LinkListAccordAppointValGetPos(LinkList *pList, ELEMEMTTYPE val, int 
             return pos;
         }
 #endif
-        trvalNode = trvalNode->next;
+        travelNode = travelNode->next;
         pos++;
     }
     *pPos = NOT_FIND;
@@ -236,7 +237,7 @@ int LinkListDelAppointData(LinkList *pList, ELEMEMTTYPE val, int(*compareFunc)(E
             pos--;
         }
 #endif
-        LinkListAccordAppointValGetPos(pList, val, &pos, compareFunc);
+        pos = LinkListAccordAppointValGetPos(pList, val, &pos, compareFunc);
         LinkListDelAppointPos(pList, pos);       
     }
     return ret;

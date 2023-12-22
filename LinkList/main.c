@@ -23,6 +23,13 @@ int printBaiscData(void *arg)
     printf("data:%d\t", data);
 }
 
+int compareData(void* arg1, void*arg2)
+{
+    int num1 = *(int*)arg1;
+    int num2 = *(int*)arg2;
+    return num1 == num2 ? 0 : 1;
+}
+
 int main()
 {
     
@@ -45,6 +52,7 @@ int main()
 
     LinkListForeach(list, printBaiscData);
     printf("\n");
+
 {
     printf("测试指定位置插入\n");
     int val = 9;
@@ -68,8 +76,8 @@ int main()
 
 {
     printf("删除指定数据\n");
-    int val = 2;
-    //LinkListDelAppointData(list, &val, );
+    int val = 1;
+    LinkListDelAppointData(list, &val, compareData);
     int size = 0;
     LinkListGetLength(list, &size);
     printf("size:%d\n", size);
