@@ -14,7 +14,7 @@ enum STATUS_CODE
 /* 静态函数前置声明*/
 static int doubleLinkListAccordAppointValGetPos(doubleLinkList *pList, ELEMEMTTYPE val, int *pPos, int(*compareFunc)(ELEMEMTTYPE , ELEMEMTTYPE));
 /* 新建新结点 封装成函数 */
-static doubleLinkList * createDoubleLinkNode(ELEMEMTTYPE val);
+static DoubleLinkNode * createDoubleLinkNode(ELEMEMTTYPE val);
 
 /* 链表初始化 */
 int doubleLinkListInit(doubleLinkList **pList)
@@ -61,7 +61,7 @@ int doubleLinkListTailInsert(doubleLinkList *pList, ELEMEMTTYPE val)
     return doubleLinkListAppointPosInsert(pList, pList->len, val);
 }
 
-static doubleLinkList * createDoubleLinkNode(ELEMEMTTYPE val)
+static DoubleLinkNode * createDoubleLinkNode(ELEMEMTTYPE val)
 {
     /* 封装结点 */
     DoubleLinkNode * newNode = (DoubleLinkNode *)malloc(sizeof(DoubleLinkNode) * 1);
@@ -174,29 +174,36 @@ int doubleLinkListDelAppointPos(doubleLinkList *pList, int pos)
     DoubleLinkNode * travelNode = pList->head;
 #else
 #endif
-    int flag = 0;
+    DoubleLinkNode * needDelNode = NULL;
     /* 需要修改尾指针*/
     if(pos == pList->len)
     {
-        flag = 1;
+        /* 备份尾指针 */
+        DoubleLinkNode * tmpNode = pList->tail;
+        /* 移动尾指针 */
+        pList->tail = pList->tail->prev;
+        needDelNode = tmpNode;
     }
-    DoubleLinkNode * needDelNode = NULL;
-    while(--pos)
+    else
     {
-        /* 向后移动位置 */
-        travelNode = travelNode->next;
-        //pos--;
+        while(--pos)
+        {
+            /* 向后移动位置 */
+            travelNode = travelNode->next;
+            //pos--;
+        }    
+        //跳出循环找到的是哪一个结点 
+        needDelNode = travelNode->next;;
+        travelNode->next = needDelNode->next;
+        needDelNode->next->prev = travelNode;
     }
-
-    //跳出循环找到的是哪一个结点 
-    needDelNode = travelNode->next;;
-    travelNode->next = needDelNode->next;
+#if 0
     if(flag)
     {
         /* 调整尾指针 */
         pList->tail = travelNode;
     }
-
+#endif 
     /* 释放内存 */
     if(needDelNode != NULL)
     {
@@ -218,10 +225,10 @@ static int doubleLinkListAccordAppointValGetPos(doubleLinkList *pList, ELEMEMTTY
     DoubleLinkNode * trvalNode = pList->head;
 #else
     int pos = 1;
-    DoubleLinkNode * trvalNode = pList->head->next;
+    DoubleLinkNode * travelNode = pList->head->next;
 #endif
     int cmp = 0;
-    while(trvalNode != NULL)
+    while(travelNode != NULL)
     {
 #if 0
         if(trvalNode->data == val)
@@ -231,6 +238,7 @@ static int doubleLinkListAccordAppointValGetPos(doubleLinkList *pList, ELEMEMTTY
             return pos;
         }
 #else
+        cmp = compareFunc(val, travelNode->data);
         if(cmp == 0)
         {
             /* 解引用 */
@@ -238,7 +246,7 @@ static int doubleLinkListAccordAppointValGetPos(doubleLinkList *pList, ELEMEMTTY
             return pos;
         }
 #endif
-        trvalNode = trvalNode->next;
+        travelNode = travelNode->next;
         pos++;
     }
     *pPos = NOT_FIND;
@@ -246,7 +254,7 @@ static int doubleLinkListAccordAppointValGetPos(doubleLinkList *pList, ELEMEMTTY
 }
 
 /* 删除指定数据 */
-int doubleLinkListDelAppointData(doubleLinkList *pList, ELEMEMTTYPE val, int(*compareFunc)(ELEMEMTTYPE , ELEMEMTTYPE))
+int doubleLinkListDelAppointData(doubleLinkList *pList, ELEMEMTTYPE val, int(*compareFunc)(ELEMEMTTYPE, ELEMEMTTYPE))
 {
     int ret = 0;
     /* 元素在链表中的位置 */
@@ -341,5 +349,24 @@ int doubleLinkListForeach(doubleLinkList *pList, int (*printFunc)(ELEMEMTTYPE))
        travelNode = travelNode->next;
     } 
 #endif
+    return ret;
+}
+
+/* 逆序遍历 */
+int doubleLinkListReverseForeach(doubleLinkList *pList, int (*printFunc)(ELEMEMTTYPE))
+{
+    int ret = 0;
+    if(pList == NULL)
+    {
+        return NULL_PTR;
+    }
+
+    DoubleLinkNode * travelNode = pList->tail;
+     
+    while(travelNode != pList->head)
+    {
+        printFunc(travelNode->data);
+        travelNode = travelNode->prev;
+    }
     return ret;
 }

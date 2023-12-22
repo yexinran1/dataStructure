@@ -23,57 +23,73 @@ int printBaiscData(void *arg)
     printf("data:%d\t", data);
 }
 
+int compareData(void* arg1, void*arg2)
+{
+    int num1 = *(int*)arg1;
+    int num2 = *(int*)arg2;
+    return num1 == num2 ? 0 : 1;
+}
+
 int main()
 {
     
-    LinkList * list = NULL;
+    doubleLinkList * list = NULL;
     /* 初始化 链表*/
-    LinkListInit(&list);
+    doubleLinkListInit(&list);
 #if 1
     int buffer[BUFFER_SIZE] = {1, 2, 3, 4, 5};
     /* 插入数据 */
     for(int idx = 0; idx < BUFFER_SIZE; idx++)
     {
-        LinkListTailInsert(list, (void*)&buffer[idx]);
+        doubleLinkListTailInsert(list, (void*)&buffer[idx]);
     }
     
     printf("测试插入\n");
     /* 获取链表的长度 */
     int size = 0;
-    LinkListGetLength(list, &size);
+    doubleLinkListGetLength(list, &size);
     printf("size:%d\n", size);
 
-    LinkListForeach(list, printBaiscData);
+    doubleLinkListForeach(list, printBaiscData);
     printf("\n");
 {
     printf("测试指定位置插入\n");
     int val = 9;
-    LinkListAppointPosInsert(list, 2, &val);
+    doubleLinkListAppointPosInsert(list, 2, &val);
     int size = 0;
-    LinkListGetLength(list, &size);
+    doubleLinkListGetLength(list, &size);
     printf("size:%d\n", size);
-    LinkListForeach(list, printBaiscData);
+    doubleLinkListForeach(list, printBaiscData);
     printf("\n");
 }
 
 {
     printf("测试指定位置删除\n");
-    LinkListDelAppointPos(list, 3);
+    doubleLinkListDelAppointPos(list, 3);
     int size = 0;
-    LinkListGetLength(list, &size);
+    doubleLinkListGetLength(list, &size);
     printf("size:%d\n", size);
-    LinkListForeach(list, printBaiscData);
+    doubleLinkListForeach(list, printBaiscData);
     printf("\n");
 }
 
 {
-    printf("删除指定数据\n");
+    printf("测试删除指定数据\n");
     int val = 2;
-    //LinkListDelAppointData(list, &val, );
+    doubleLinkListDelAppointData(list, &val, compareData);
     int size = 0;
-    LinkListGetLength(list, &size);
+    doubleLinkListGetLength(list, &size);
     printf("size:%d\n", size);
-    LinkListForeach(list, printBaiscData);
+    doubleLinkListForeach(list, printBaiscData);
+    printf("\n");
+}
+
+{
+    printf("测试逆序遍历\n");
+    int size = 0;
+    doubleLinkListGetLength(list, &size);
+    printf("size:%d\n", size);
+    doubleLinkListReverseForeach(list, printBaiscData);
     printf("\n");
 }
 #else

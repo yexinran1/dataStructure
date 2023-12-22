@@ -57,4 +57,7 @@ int doubleLinkListDestory(doubleLinkList *pList);
 /* 链表遍历接口 */
 int doubleLinkListForeach(doubleLinkList *pList, int (*printFunc)(ELEMEMTTYPE));
 
+
+int doubleLinkListReverseForeach(doubleLinkList *pList, int (*printFunc)(ELEMEMTTYPE));
+
 #endif
