@@ -13,6 +13,8 @@ enum STATUS_CODE
 /* 静态函数只在源文件生效 */
 /* 静态函数前置声明*/
 static int doubleLinkListAccordAppointValGetPos(doubleLinkList *pList, ELEMEMTTYPE val, int *pPos, int(*compareFunc)(ELEMEMTTYPE , ELEMEMTTYPE));
+/* 新建新结点 封装成函数 */
+static doubleLinkList * createDoubleLinkNode(ELEMEMTTYPE val);
 
 /* 链表初始化 */
 int doubleLinkListInit(doubleLinkList **pList)
@@ -33,7 +35,9 @@ int doubleLinkListInit(doubleLinkList **pList)
     /* 清空脏数据 */
     memset(list->head, 0, sizeof(DoubleLinkNode) * 1);
     list->head->data = 0;
-    list->head->next = NULL                                    ;
+    list->head->next = NULL; 
+    /* 虚拟头结点的prev指针置为NULL */
+    list->head->prev = NULL;                                 ;
     /* 初始化的时候尾指针 = 头指针 */
     list->tail = list->head;
     
@@ -57,6 +61,25 @@ int doubleLinkListTailInsert(doubleLinkList *pList, ELEMEMTTYPE val)
     return doubleLinkListAppointPosInsert(pList, pList->len, val);
 }
 
+static doubleLinkList * createDoubleLinkNode(ELEMEMTTYPE val)
+{
+    /* 封装结点 */
+    DoubleLinkNode * newNode = (DoubleLinkNode *)malloc(sizeof(DoubleLinkNode) * 1);
+    if(newNode == NULL)
+    {
+        return NULL;
+    }
+    /* 清楚脏数据 */
+    memset(newNode, 0, sizeof(DoubleLinkNode) * 1);
+
+    newNode->data = 0;
+    newNode->next = NULL;
+    newNode->prev = NULL;
+    /* 赋值 */
+    newNode->data = val;
+    return newNode;
+
+}
 /* 链表指定位置插入 */
 int doubleLinkListAppointPosInsert(doubleLinkList *pList, int pos, ELEMEMTTYPE val)
 {
@@ -69,7 +92,14 @@ int doubleLinkListAppointPosInsert(doubleLinkList *pList, int pos, ELEMEMTTYPE v
     {
         return INVALID_ACCESS;
     }
-
+    /* 新建新结点 封装成函数 */
+#if 1
+    DoubleLinkNode * newNode =  createDoubleLinkNode(val);
+    if(newNode == NULL)
+    {
+        return NULL_PTR;
+    }
+#else
     /* 封装结点 */
     DoubleLinkNode * newNode = (DoubleLinkNode *)malloc(sizeof(DoubleLinkNode) * 1);
     if(newNode == NULL)
@@ -81,7 +111,7 @@ int doubleLinkListAppointPosInsert(doubleLinkList *pList, int pos, ELEMEMTTYPE v
 
     /* 赋值 */
     newNode->data = val;
-
+#endif
 #if 1
     DoubleLinkNode * travelNode = pList->head;
 #else
@@ -100,10 +130,13 @@ int doubleLinkListAppointPosInsert(doubleLinkList *pList, int pos, ELEMEMTTYPE v
             travelNode = travelNode->next;
             pos--;
         }
+        travelNode->next->prev = newNode;
     }
     /* 修改结点指向 */
     newNode->next = travelNode->next;
+    newNode->prev = travelNode;
     travelNode->next = newNode;
+
     if(flag)
     {
         pList->tail = newNode;
