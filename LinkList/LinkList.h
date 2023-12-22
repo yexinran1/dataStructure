@@ -1,15 +1,16 @@
 #ifndef _LINKLIST_H_
 #define _LINKLIST_H_   
 
-#define ELEMEMTTYPE int
+#define ELEMEMTTYPE void*
 
-/* 链表结点取别名*/
+/* 链表结点取别名 */
 typedef struct LinkNode
 {
     ELEMEMTTYPE data;
-    /* 指向下一个节点的指针 */
-    struct LinkNode *next;  /* 指针的类型 */
+    /* 指向下一个结点的指针 */
+    struct  LinkNode * next;
 }LinkNode;
+
 
 /* 链表 */
 typedef struct LinkList
@@ -43,7 +44,7 @@ int LinkListTailDel(LinkList *pList);
 int LinkListDelAppointPos(LinkList *pList, int pos);
 
 /* 删除指定数据 */
-int LinkListDelAppointData(LinkList *pList, ELEMEMTTYPE val);
+int LinkListDelAppointData(LinkList *pList, ELEMEMTTYPE val, int(*compareFunc)(ELEMEMTTYPE, ELEMEMTTYPE));
 
 /* 获取链表长度 */
 int LinkListGetLength(LinkList *pList, int *pSize);
@@ -52,6 +53,6 @@ int LinkListGetLength(LinkList *pList, int *pSize);
 int LinkListDestory(LinkList *pList);
 
 /* 链表遍历接口 */
-int LinkListForeach(LinkList *pList);
+int LinkListForeach(LinkList *pList, int (*printFunc)(ELEMEMTTYPE));
 
 #endif
