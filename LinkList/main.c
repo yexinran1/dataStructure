@@ -84,6 +84,17 @@ int main()
     LinkListForeach(list, printBaiscData);
     printf("\n");
 }
+
+{
+    printf("测试销毁\n");
+    LinkListDestory(list);
+     int size = 0;
+    LinkListGetLength(list, &size);
+    printf("size:%d\n", size);
+    LinkListForeach(list, printBaiscData);
+    printf("\n");
+
+}
 #else
 
     stuInfo stu1, stu2, stu3;
