@@ -64,7 +64,7 @@ int main()
 }
 
 {
-    printf("测试指定位置删除\n");
+    printf("测试指定位置3删除\n");
     doubleLinkListDelAppointPos(list, 3);
     int size = 0;
     doubleLinkListGetLength(list, &size);
@@ -74,7 +74,17 @@ int main()
 }
 
 {
-    printf("测试删除指定数据\n");
+    printf("测试尾删除\n");
+    doubleLinkListTailDel(list);
+    int size = 0;
+    doubleLinkListGetLength(list, &size);
+    printf("size:%d\n", size);
+    doubleLinkListForeach(list, printBaiscData);
+    printf("\n");
+}
+
+{
+    printf("测试删除指定数据2\n");
     int val = 2;
     doubleLinkListDelAppointData(list, &val, compareData);
     int size = 0;

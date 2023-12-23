@@ -183,6 +183,7 @@ int doubleLinkListDelAppointPos(doubleLinkList *pList, int pos)
         /* 移动尾指针 */
         pList->tail = pList->tail->prev;
         needDelNode = tmpNode;
+        //pList->tail->next = NULL;
     }
     else
     {
