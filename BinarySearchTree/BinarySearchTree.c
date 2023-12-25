@@ -185,7 +185,7 @@ int binarySearchTreeIsContainAppointVal(BinarySearchTree *pBStree, ELEMEMTTYPE v
 }
 
 /* 二叉搜索树的前序遍历 */
-int binarySearchTreePreOrderTravel()
+int binarySearchTreePreOrderTravel(BinarySearchTree *pBStree)
 {
     int ret = 0;
     return ret;
@@ -193,21 +193,21 @@ int binarySearchTreePreOrderTravel()
 }
 
 /* 二叉搜索树的中序遍历 */
-int binarySearchTreeInOrderTravel()
+int binarySearchTreeInOrderTravel(BinarySearchTree *pBStree)
 {
     int ret = 0;
     return ret;
 }
 
 /* 二叉搜索树的后序遍历 */
-int binarySearchTreePosOrderTravel()
+int binarySearchTreePosOrderTravel(BinarySearchTree *pBStree)
 {
     int ret = 0;
     return ret;
 }
 
 /* 二叉搜索树的层序遍历 */
-int binarySearchTreeLevelOrderTravel()
+int binarySearchTreeLevelOrderTravel(BinarySearchTree *pBStree)
 {
     int ret = 0;
     return ret;
