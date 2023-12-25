@@ -61,7 +61,7 @@ int dynamicArrayInit(dynamicArray *pArray, int capacity)
 {
     JUDGE_NULL(pArray);
     /* 避免传入非法值 */
-    if(capacity < 0)
+    if(capacity <= 0)
     {
         capacity = DEFAULT_SIZE;
     }

@@ -1,6 +1,7 @@
 #ifndef _DYNAMIC_ARRAY_H_
 #define _DYNAMIC_ARRAY_H_
-
+#include "common.h"
+#if 0
 #if 0
 typedef void* ELEMENTTYPE;
 #else
@@ -14,7 +15,7 @@ typedef struct dynamicArray
     int capacity;           /* 数组的容量 */
 
 }dynamicArray;
-
+#endif
 /* API：application program interface*/
 /* 动态数组初始化 */
 int dynamicArrayInit(dynamicArray *pArray, int capacity);
