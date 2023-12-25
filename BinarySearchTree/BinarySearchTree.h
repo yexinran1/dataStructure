@@ -30,6 +30,9 @@ int binarySearchTreeInit(BinarySearchTree **pBStree);
 /* 二叉搜索树的插入 */
 int binarySearchTreeInsert(BinarySearchTree *pBStree, ELEMEMTTYPE val, int(*compareFunc)(ELEMEMTTYPE val1, ELEMEMTTYPE val2));
 
+/* 二叉搜索时是否包含指定元素 */
+int binarySearchTreeIsContainAppointVal(BinarySearchTree *pBStree, ELEMEMTTYPE val, int(*compareFunc)(ELEMEMTTYPE val1, ELEMEMTTYPE val2));
+
 /* 二叉搜索树的前序遍历 */
 int binarySearchTreePreOrderTravel();
 
