@@ -29,14 +29,14 @@ int dynamicArrayStackTop(dynamicArrayStACK *pStack, ELEMENTTYPE *pVal)
 /* 出栈 */
 int dynamicArrayStackPop(dynamicArrayStACK *pStack)
 {
-    dynamicArrayDeleteData(pStack);
+    return dynamicArrayDeleteData(pStack);
 }
 
 /* 栈是否为空 */
 int dynamicArrayStackIsEmpty(dynamicArrayStACK *pStack)
 {
     int size = 0;
-    return dynamicArrayGetSize(pStack, &size);
+    dynamicArrayGetSize(pStack, &size);
     return size == 0 ? 1 : 0;
 }
 
@@ -57,5 +57,5 @@ int dynamicArrayStackGetSize(dynamicArrayStACK *pStack, int *pSize)
 /* 销毁 */
 int dynamicArrayStackDestory(dynamicArrayStACK *pStack)
 {
-    dynamicArrayDestory(pStack);
+    return  dynamicArrayDestory(pStack);
 }

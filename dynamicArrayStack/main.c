@@ -12,7 +12,7 @@ int main()
     int buffer[BUFFER_SIZE] = {5, 32, 21, 56, 87};
     for(int idx = 0; idx < BUFFER_SIZE; idx++)
     {
-        dynamicArrayStackPush(&stack, &idx);
+        dynamicArrayStackPush(&stack, &buffer[idx]);
     }
     int size = 0;
     dynamicArrayStackGetSize(&stack, &size);
