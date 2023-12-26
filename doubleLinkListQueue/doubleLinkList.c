@@ -371,3 +371,52 @@ int doubleLinkListReverseForeach(doubleLinkList *pList, int (*printFunc)(ELEMEMT
     }
     return ret;
 }
+/* 获取头位置的值 */
+int doubleLinkListGetHeadVal(doubleLinkList *pList, ELEMEMTTYPE *pVal)
+{
+    #if 0
+    
+    int ret = 0;
+    if (pList == NULL)
+    {
+        return NULL_PTR;
+    }
+    if(pVal)
+    {
+        *pVal = pList->head->next->data;
+    }
+    return ret;
+    #endif
+    doubleLinkListGetAppointVal(pList, 1, pVal);
+}
+
+/* 获取链表尾位置的值 */
+int doubleLinkListGetTailVal(doubleLinkList *pList, ELEMEMTTYPE *pVal)
+{
+    doubleLinkListGetAppointVal(pList, pList->len, pVal);
+}
+
+/* 获取链表 指定位置的值 */
+int doubleLinkListGetAppointVal(doubleLinkList *pList, int pos, ELEMEMTTYPE *pVal)
+{
+    #if 0
+    #else
+    int ret = 0;
+    if (pList == NULL)
+    {
+        return NULL_PTR;
+    }
+    if(pos < 0 || pos > pList->len)
+    {
+        return INVALID_ACCESS;
+    }
+    DoubleLinkNode * travelNode = pList->head;
+    while(pos)
+    {
+        pos--;
+        travelNode = travelNode->next;
+    }
+    *pVal = travelNode->data;
+    return ret;
+    #endif
+}
