@@ -102,6 +102,13 @@ int main()
     doubleLinkListReverseForeach(list, printBaiscData);
     printf("\n");
 }
+
+{
+    printf("测试获取指定位置2\n");
+    int *val = NULL;
+    doubleLinkListGetAppointVal(list, 1, (void**)&val);
+    printf("pos1:%d\n", *val);
+}
 #else
 
     stuInfo stu1, stu2, stu3;

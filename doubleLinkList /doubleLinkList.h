@@ -57,7 +57,16 @@ int doubleLinkListDestory(doubleLinkList *pList);
 /* 链表遍历接口 */
 int doubleLinkListForeach(doubleLinkList *pList, int (*printFunc)(ELEMEMTTYPE));
 
-
+/* 链表逆序遍历 */
 int doubleLinkListReverseForeach(doubleLinkList *pList, int (*printFunc)(ELEMEMTTYPE));
+
+/* 获取头位置的值 */
+int doubleLinkListGetHeadVal(doubleLinkList *pList, ELEMEMTTYPE *pVal);
+
+/* 获取链表头位置的值 */
+int doubleLinkListGetTailVal(doubleLinkList *pList, ELEMEMTTYPE *pVal);
+
+/* 获取链表指定位置的值 */
+int doubleLinkListGetAppointVal(doubleLinkList *pList, int pos, ELEMEMTTYPE *pVal);
 
 #endif
