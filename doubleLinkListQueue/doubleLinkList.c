@@ -406,7 +406,7 @@ int doubleLinkListGetAppointVal(doubleLinkList *pList, int pos, ELEMEMTTYPE *pVa
     {
         return NULL_PTR;
     }
-    if(pos < 0 || pos > pList->len)
+    if(pos <= 0 || pos > pList->len)
     {
         return INVALID_ACCESS;
     }
