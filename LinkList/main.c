@@ -66,7 +66,7 @@ int main()
 
 {
     printf("测试指定位置删除\n");
-    LinkListDelAppointPos(list, 3);
+    LinkListDelAppointPos(list, 1);
     int size = 0;
     LinkListGetLength(list, &size);
     printf("size:%d\n", size);

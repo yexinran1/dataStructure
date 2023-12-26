@@ -116,13 +116,13 @@ int LinkListAppointPosInsert(LinkList *pList, int pos, ELEMEMTTYPE val)
 /* 头删除 */
 int LinkListHeadDel(LinkList *pList)
 {
-    LinkListDelAppointPos(pList, 1);
+    return LinkListDelAppointPos(pList, 1);
 }
 
 /* 尾删除 */
 int LinkListTailDel(LinkList *pList)
 {
-    LinkListDelAppointPos(pList, pList->len);
+    return LinkListDelAppointPos(pList, pList->len);
 }
 
 /* 链表指定位置删除 */
