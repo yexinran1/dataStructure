@@ -104,13 +104,12 @@ static int binarySearchTreeNodeIsLeaf(BSTreeNode *node)
     return (node->right == NULL) && (node->left == NULL);
 }
 
-/* 获取当前结点的前驱结点 */
+/* 获取当前结点的前驱结点 中序遍历到结点的前一个结点 */
 static BSTreeNode * bstreeNodePreDecessor(BSTreeNode * node)
 {
-    /* 度为2 */
-    if(binarySearchTreeNodeHasTwoChildren(node))
+    if(node->left != NULL)
     {
-        /* 度为2，前驱结点是在左子树的右子树的右子树...*/
+        /*前驱结点是在左子树的右子树的右子树...*/
         BSTreeNode * travelNode = node->left;
         while (travelNode->right != NULL)
         {
@@ -118,10 +117,13 @@ static BSTreeNode * bstreeNodePreDecessor(BSTreeNode * node)
         }
         return travelNode;       
     }
-    /* 程序到这里一定是度为1或0 */
-    /* 度为1 */
+    /* 程序执行到这个地方 说明一定没有左子树 那就需要想父节点找 */
+    while(node->parent != NULL && (node == node->parent->left))
+    {
+        node = node->parent;
+    }
+    return node->parent;
 
-    /* 度为0 */
 }
 /* 获取当前结点的后继结点 */
 static BSTreeNode * bstreeNodeSuccessor(BSTreeNode * node)
@@ -434,7 +436,7 @@ int binarySearchTreeGetHeight(BinarySearchTree *pBstree, int *pHeight)
     }
     /* 解引用 */
     *pHeight = height;
-    
+
     /* 释放队列 */
     doubleLinkListQueueDestorty(pQueue);
     return ret;
@@ -444,4 +446,56 @@ int binarySearchTreeGetHeight(BinarySearchTree *pBstree, int *pHeight)
 int binarySearchTreeDelete(BinarySearchTree *pBstree, ELEMEMTTYPE val)
 {
     
+}
+
+/* 二叉搜索树的销毁*/
+int binarySearchTreeDestory(BinarySearchTree * pBstree)
+{
+    if(pBstree == NULL)
+    {
+        return NULL_PTR;
+    }
+
+    int ret;
+    doubleLinkListQueue * pQueue = NULL;
+    doubleLinkListQueueInit(&pQueue);
+
+    /* 根节点入队 */
+    doubleLinkListQueuePush(pQueue, pBstree->root);
+
+    BSTreeNode * nodeVal = NULL;
+    while (doubleLinkListQueueIsEmpty(pQueue))
+    {
+        doubleLinkListQueueTop(pQueue, (void **)&nodeVal);
+        doubleLinkListQueuePop(pQueue);
+        /* 左子树不为空 */
+        if (nodeVal->left != NULL)
+        {
+            doubleLinkListQueuePush(pQueue, nodeVal->left);
+        }
+
+        /* 右子树不为空 */
+        if (nodeVal->right != NULL)
+        {
+            doubleLinkListQueuePush(pQueue, nodeVal->right);
+        }
+        /* 最后释放 */
+        if(nodeVal)
+        {
+            free(nodeVal);
+            nodeVal = NULL;
+        }
+    }
+
+    /* 释放队列 */
+    doubleLinkListQueueDestorty(pQueue);
+
+    /* 释放树 */
+    if(pBstree)
+    {
+        free(pBstree);
+        pBstree = NULL;
+    }
+    return ret;
+
 }
