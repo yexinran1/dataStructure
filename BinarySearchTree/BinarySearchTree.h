@@ -53,11 +53,17 @@ int binarySearchTreePosOrderTravel(BinarySearchTree *pBStree);
 /* 二叉搜索树的层序遍历 */
 int binarySearchTreeLevelOrderTravel(BinarySearchTree *pBStree);
 
+/* 获取二叉搜索树的结点个数 */
+int binarySearchTreeGetNodeSize(BinarySearchTree *pBStree, int *pSize);
+
 /* 获取二叉搜树的高度 */
 int binarySearchTreeGetHeight(BinarySearchTree *pBstree, int *pHeight);
 
 /* 二叉搜索树的删除 */
 int binarySearchTreeDelete(BinarySearchTree *pBstree, ELEMEMTTYPE val);
+
+/* 判断树是否是完全二叉树 */
+int binarySearchTreeIsComplete(BinarySearchTree *pBSTree);
 
 /* 二叉搜索树的销毁*/
 int binarySearchTreeDestory(BinarySearchTree * pBstree);
