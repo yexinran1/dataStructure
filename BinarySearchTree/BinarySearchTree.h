@@ -1,7 +1,9 @@
 #ifndef __BINARY_SEARCH_TREE_H_
 #define __BINARY_SEARCH_TREE_H_
 
-#define ELEMEMTTYPE int
+#include "doubleLinkListQueue.h"
+//#define ELEMEMTTYPE int
+
 
 typedef struct BSTreeNode
 {
@@ -50,7 +52,7 @@ int binarySearchTreePosOrderTravel(BinarySearchTree *pBStree);
 int binarySearchTreeLevelOrderTravel(BinarySearchTree *pBStree);
 
 /* 获取二叉搜树的高度 */
-int binarySearchTreeGetHeight(BinarySearchTree *pBstree);
+int binarySearchTreeGetHeight(BinarySearchTree *pBstree, int *pHeight);
 
 /* 二叉搜索树的删除 */
 int binarySearchTreeDelete(BinarySearchTree *pBstree, ELEMEMTTYPE val);

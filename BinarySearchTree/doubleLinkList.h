@@ -45,6 +45,6 @@ int doubleLinkListGetHeadVal(doubleLinkList *pList, ELEMEMTTYPE *pVal);
 /* 获取链表头位置的值 */
 int doubleLinkListGetTailVal(doubleLinkList *pList, ELEMEMTTYPE *pVal);
 
-/* 获取链表 尾位置的值 */
-int doubleLinkListGetAppointVal(doubleLinkList *pList, ELEMEMTTYPE *pVal);
+/* 获取链表指定位置的值 */
+int doubleLinkListGetAppointVal(doubleLinkList *pList, int pos, ELEMEMTTYPE *pVal);
 #endif
