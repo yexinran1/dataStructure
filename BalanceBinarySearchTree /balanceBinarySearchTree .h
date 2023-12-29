@@ -8,6 +8,7 @@
 typedef struct AVLTreeNode
 {
     ELEMEMTTYPE data;
+    int height;
     struct AVLTreeNode *left;        /* 左子树 */
     struct AVLTreeNode *right;       /* 右子树 */
     #if 1
@@ -22,6 +23,8 @@ typedef struct BalanceBinarySearchTree
     AVLTreeNode *root;
     /* 树的结点个数 */
     int size;
+    /* 树的高度 */
+    int height;
     /* 钩子函数比较器放在结构体 */
     int (*compareFunc)(ELEMEMTTYPE val1, ELEMEMTTYPE val2);
 
@@ -67,5 +70,7 @@ int balanceBinarySearchTreeIsComplete(BalanceBinarySearchTree *pBstree);
 
 /* 二叉搜索树的销毁*/
 int balanceBinarySearchTreeDestory(BalanceBinarySearchTree * pBstree);
+
+
 
 #endif

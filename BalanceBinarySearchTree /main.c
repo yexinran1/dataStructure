@@ -85,7 +85,7 @@ int main()
 }
 {
     printf("删除指定元素：\n");
-    int val = 13;
+    int val = 56;
     balanceBinarySearchTreeDelete(AVL, &val);
     balanceBinarySearchTreeLevelOrderTravel(AVL);
     printf("\n");
